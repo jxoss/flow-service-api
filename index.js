@@ -11,10 +11,16 @@ exports.access = function (options, data, next) {
         return next(new Error('Flow-API: Access denied (No API Key found).'));
     }
 
-    // check for application id
-    data.app = data.app || options.app;
-    if (!data.app) {
-        return next(new Error('Flow-API: No AppID found.'));
+    // check for item type
+    data.type = data.type || options.type;
+    if (!data.type) {
+        return next(new Error('Flow-API: Access denied (No type found).'));
+    }
+
+    // check for item id
+    data.id = data.id || options.id;
+    if (!data.id) {
+        return next(new Error('Flow-API: Access denied (No item ID found).'));
     }
 
     // check for required composition name
@@ -24,14 +30,14 @@ exports.access = function (options, data, next) {
     }
 
     // receive a role or deny access
-    data.role = Service.Access.cache(data.key, options.session.user, data.app);
+    data.role = Service.Access.cache(data.key, options.session.user, data.type, data.id);
 
     if (data.role instanceof Error) {
         return next(data.role);
     }
 
     if (!data.role) {
-        return Service.Access.key(data.key, options.session.user, data.app, function (err, role) {
+        return Service.Access.key(data.key, options.session.user, data.type, data.id, function (err, role) {
 
             if (err) {
                 return next(err);
