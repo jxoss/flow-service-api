@@ -1,2 +1,2 @@
 # flow-service-api
-Flow wrapper of the service API
+Flow wrapper of the Service API
