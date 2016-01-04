@@ -24,14 +24,14 @@ exports.access = function (options, data, next) {
     }
 
     // receive a role or deny access
-    data.role = Access.cache(data.key, options.session.user, data.app);
+    data.role = Service.Access.cache(data.key, options.session.user, data.app);
 
     if (data.role instanceof Error) {
         return next(data.role);
     }
 
     if (!data.role) {
-        return Access.key(data.key, options.session.user, data.app, function (err, role) {
+        return Service.Access.key(data.key, options.session.user, data.app, function (err, role) {
 
             if (err) {
                 return next(err);
