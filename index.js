@@ -5,6 +5,9 @@ var Service = require('service-api');
 // export access check data handler
 exports.access = function (options, data, next) {
 
+    /*REMOVE AFTER TESTING*/
+    options.session.user = options.session.user || 'userid';
+
     // check for apiKey
     data.key = data.key || options.key || options.session.key;
     if (!data.key) {
