@@ -1,11 +1,12 @@
-var Service = require('service-api');
+var ServiceApi = require('service-api');
+var Service = new ServiceApi();
 
 // TODO export service-api public methods
 
 // export access check data handler
 exports.access = function (options, data, next) {
 
-    /*REMOVE AFTER TESTING*/
+    /*REMOVE WHEN LOGIN IS IMPLEMENTED*/
     options.session.user = options.session.user || 'userid';
 
     // check for apiKey
