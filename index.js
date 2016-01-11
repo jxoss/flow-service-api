@@ -55,6 +55,13 @@ exports.access = function (options, data, next) {
     next(null, data);
 };
 
+// export user api data handler
+exports.user = {
+    get: function (options, data, next) { return Service.User.get(data, next); },
+    create: function (options, data, next) { return Service.User.create(data, next); },
+    authenticate: function (options, data, next) { return Service.User.authenticate(options, data, next); }
+};
+
 exports.context = function (options, data, next) {
     // TODO extend data object with api instances
     next(null, data);
