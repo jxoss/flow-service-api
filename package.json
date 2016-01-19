@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/jillix/flow-service-api#readme",
   "dependencies": {
-    "service-api": "jillix/service-api#new-structure"
+    "service-api": "jillix/service-api#new-structure",
+    "set-or-get": "^1.0.0",
+    "iterate-object": "^1.1.0"
   }
 }

@@ -1,69 +1,46 @@
-var ServiceApi = require('service-api');
-var Service = new ServiceApi();
+// Dependencies
+var ServiceApi = require('service-api')
+  , Service = new ServiceApi()
+  , SetOrGet = require('set-or-get')
+  , IterateObject = require('iterate-object')
+  , Handlers = require('./lib');
 
-// TODO export service-api public methods
+module.exports = {};
 
-// export access check data handler
-exports.access = function (options, data, next) {
+/**
+ * Generate a wrapper for the appended data handler
+ *
+ * @private
+*/
+function generateMethod (prefix, handler) {
+    return function (options, data, next) {
 
-    /*REMOVE WHEN LOGIN IS IMPLEMENTED*/
-    options.session.user = options.session.user || 'userid';
+        // append the ServiceApi instance to the options object
+        options._Service = Service;
 
-    // check for apiKey
-    data.key = data.key || options.key || options.session.key;
-    if (!data.key) {
-        return next(new Error('Flow-API: Access denied (No API Key found).'));
+        /* Do custom stuff here before the handler is called
+         * ...
+        */
+
+        // call the data handler
+        handler.call(this, options, data, next);
     }
-
-    // check for item type
-    data.type = data.type || options.type;
-    if (!data.type) {
-        return next(new Error('Flow-API: Access denied (No type found).'));
-    }
-
-    // check for item id
-    data.id = data.id || options.id;
-    if (!data.id) {
-        return next(new Error('Flow-API: Access denied (No item ID found).'));
-    }
-
-    // check for required composition name
-    data.comp = data.comp || options.comp;
-    if (options.compReq && !data.comp) {
-        return next(new Error('Flow-API: Missing required composition name.'));
-    }
-
-    // receive a role or deny access
-    data.role = Service.Access.cache(data.key, options.session.user, data.type, data.id);
-
-    if (data.role instanceof Error) {
-        return next(data.role);
-    }
-
-    if (!data.role) {
-        return Service.Access.key(data.key, options.session.user, data.type, data.id, function (err, role) {
-
-            if (err) {
-                return next(err);
-            }
-
-            data.role = role;
-            next(null, data);
-        });
-    }
-
-    next(null, data);
-};
-
-// export user api data handler
-exports.user = {
-    get: function (options, data, next) { return Service.User.get(data, next); },
-    create: function (options, data, next) { return Service.User.create(data, next); },
-    authenticate: function (options, data, next) { return Service.User.authenticate(options, data, next); }
-};
-
-exports.context = function (options, data, next) {
-    // TODO extend data object with api instances
-    next(null, data);
 }
 
+/**
+ * Append the available data handlers to the module.exports object
+ *
+ * @private
+*/
+function appendDataHandlers (object, parent, prefix) {
+    IterateObject(object, function (handler, name) {
+        var cPref = prefix ? prefix + '.' + name : name;
+        if (typeof handler === 'object') {
+            return appendDataHandlers(handler, SetOrGet(parent, name, {}), cPref);
+        }
+        parent[name] = generateMethod(cPref, handler);
+    });
+}
+
+// start appending the data handlers
+appendDataHandlers(Handlers, module.exports, '');
