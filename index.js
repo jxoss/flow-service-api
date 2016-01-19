@@ -1,33 +1,46 @@
-var ServiceApi = require('service-api');
-var Service = new ServiceApi();
+// Dependencies
+var ServiceApi = require('service-api')
+  , Service = new ServiceApi()
+  , SetOrGet = require('set-or-get')
+  , IterateObject = require('iterate-object')
+  , Handlers = require('./lib');
 
-exports.context = function (options, data, next) {
-    // TODO extend data object with api instances
-    next(null, data);
-}
+module.exports = {};
 
-function premethod (name, method) {
+/**
+ * Generate a wrapper for the appended data handler
+ *
+ * @private
+*/
+function generateMethod (prefix, handler) {
     return function (options, data, next) {
 
-        // do stuff before the method is called
+        // append the ServiceApi instance to the options object
+        options._Service = Service;
 
-        // call the method
-        Service[name](options, data, next);
+        /* Do custom stuff here before the handler is called
+         * ...
+        */
+
+        // call the data handler
+        handler.call(this, options, data, next);
     }
 }
 
-// export api methods
-function exportMethods () {
-
-    // get all public methods of the service-api instance
-    for (var name of Object.getOwnPropertyNames(Object.getPrototypeOf(Service))) {
-        var method = Service[name];
-
-        // ignore constructor and private methods
-        if (typeof method === 'function' && name !== 'constructor' && name[0] !== '_') {
-            exports[name] = premethod(name, method);
+/**
+ * Append the available data handlers to the module.exports object
+ *
+ * @private
+*/
+function appendDataHandlers (object, parent, prefix) {
+    IterateObject(object, function (handler, name) {
+        var cPref = prefix ? prefix + '.' + name : name;
+        if (typeof handler === 'object') {
+            return appendDataHandlers(handler, SetOrGet(parent, name, {}), cPref);
         }
-    }
+        parent[name] = generateMethod(cPref, handler);
+    });
 }
 
-exportMethods();
+// start appending the data handlers
+appendDataHandlers(Handlers, module.exports, '');
