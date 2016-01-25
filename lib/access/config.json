@@ -1,0 +1,50 @@
+{
+    "user": {
+        "get": {
+            "access": [
+                "admin"
+            ]
+        },
+        "updateName": {
+            "access": [
+                "admin"
+            ]
+        },
+        "updateLocation": {
+            "access": [
+                "admin"
+            ]
+        },
+        "updateWebsite": {
+            "access": [
+                "admin"
+            ]
+        },
+        "updateCompany": {
+            "access": [
+                "admin"
+            ]
+        }
+    },
+    "project": {
+        "create": {
+            "access": [
+                "admin",
+                "write"
+            ]
+        },
+        "get": {
+            "access": [
+                "admin",
+                "write",
+                "read"
+            ]
+        },
+        "list": {
+            "access": [
+                "admin",
+                "write"
+            ]
+        }
+    }
+}
