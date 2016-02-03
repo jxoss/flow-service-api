@@ -5,6 +5,11 @@
                 "admin"
             ]
         },
+        "getLoggedUser": {
+            "access": [
+                "admin"
+            ]
+        },
         "updateName": {
             "access": [
                 "admin"
