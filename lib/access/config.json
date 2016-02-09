@@ -52,5 +52,27 @@
                 "read"
             ]
         }
+    },
+    "app": {
+        "create": {
+            "access": [
+                "admin",
+                "write"
+            ]
+        },
+        "get": {
+            "access": [
+                "admin",
+                "write",
+                "read"
+            ]
+        },
+        "list": {
+            "access": [
+                "admin",
+                "write",
+                "read"
+            ]
+        }
     }
 }
