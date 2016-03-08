@@ -29,6 +29,38 @@
             "access": [
                 "admin"
             ]
+        },
+        "updateUsername": {
+            "access": [
+                "admin"
+            ]
+        },
+        "changePassword": {
+            "access": [
+                "admin"
+            ]
+        },
+        "addEmail": {
+            "access": [
+                "admin"
+            ]
+        },
+        "removeEmail": {
+            "access": [
+                "admin"
+            ]
+        },
+        "getEmails": {
+            "access": [
+                "admin",
+                "read",
+                "write"
+            ]
+        },
+        "deleteAccount": {
+            "access": [
+                "admin"
+            ]
         }
     },
     "project": {
