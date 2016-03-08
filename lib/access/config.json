@@ -45,6 +45,11 @@
                 "admin"
             ]
         },
+        "removeEmail": {
+            "access": [
+                "admin"
+            ]
+        },
         "getEmails": {
             "access": [
                 "admin",
