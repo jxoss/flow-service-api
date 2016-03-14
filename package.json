@@ -25,6 +25,8 @@
     "service-api": "jillix/service-api",
     "set-or-get": "^1.0.0",
     "iterate-object": "^1.1.0",
-    "mandrill-api": "*"
+    "mandrill-api": "*",
+    "jipics": "*",
+    "multiparty": "*"
   }
 }

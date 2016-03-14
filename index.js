@@ -3,7 +3,8 @@ var ServiceApi = require('service-api')
   , Service = new ServiceApi()
   , SetOrGet = require('set-or-get')
   , IterateObject = require('iterate-object')
-  , Handlers = require('./lib');
+  , Handlers = require('./lib')
+  , Stream = require('stream');
 
 module.exports = {};
 
@@ -13,17 +14,24 @@ module.exports = {};
  * @private
 */
 function generateMethod (prefix, handler) {
-    return function (options, data, next) {
+    return function () {
 
-        // append the ServiceApi instance to the options object
-        options._Service = Service;
+        // get function arguments
+        var args = arguments;
 
         /* Do custom stuff here before the handler is called
          * ...
         */
 
-        // call the data handler
-        handler.call(this, options, data, next);
+        // append the ServiceApi instance to the options object
+        if (args[0].i && args[0].o && args[0].i instanceof Stream.Transform) {
+            args[1]._Service = Service;
+        } else {
+            args[0]._Service = Service;
+        }
+
+        // check if 
+        handler.apply(this, args);
     }
 }
 
