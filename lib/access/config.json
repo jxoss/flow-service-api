@@ -88,6 +88,21 @@
                 "write",
                 "read"
             ]
+        },
+        "updateName": {
+            "access": [
+                "admin"
+            ]
+        },
+        "toggleStatus": {
+            "access": [
+                "admin"
+            ]
+        },
+        "delete": {
+            "access": [
+                "admin"
+            ]
         }
     },
     "app": {
