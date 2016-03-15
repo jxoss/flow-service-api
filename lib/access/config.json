@@ -40,6 +40,11 @@
                 "admin"
             ]
         },
+        "changeProfilePic": {
+            "access": [
+                "admin"
+            ]
+        },
         "addEmail": {
             "access": [
                 "admin"
