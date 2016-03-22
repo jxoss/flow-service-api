@@ -88,6 +88,43 @@
                 "write",
                 "read"
             ]
+        },
+        "updateName": {
+            "access": [
+                "admin"
+            ]
+        },
+        "getPermissions": {
+            "access": [
+                "write",
+                "read",
+                "admin"
+            ]
+        },
+        "addWritePermission": {
+            "access": [
+                "admin"
+            ]
+        },
+        "addReadPermission": {
+            "access": [
+                "admin"
+            ]
+        },
+        "activate": {
+            "access": [
+                "admin"
+            ]
+        },
+        "deactivate": {
+            "access": [
+                "admin"
+            ]
+        },
+        "delete": {
+            "access": [
+                "admin"
+            ]
         }
     },
     "app": {
