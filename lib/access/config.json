@@ -94,7 +94,29 @@
                 "admin"
             ]
         },
-        "toggleStatus": {
+        "getPermissions": {
+            "access": [
+                "write",
+                "read",
+                "admin"
+            ]
+        },
+        "addWritePermission": {
+            "access": [
+                "admin"
+            ]
+        },
+        "addReadPermission": {
+            "access": [
+                "admin"
+            ]
+        },
+        "activate": {
+            "access": [
+                "admin"
+            ]
+        },
+        "deactivate": {
             "access": [
                 "admin"
             ]
