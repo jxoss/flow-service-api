@@ -147,6 +147,23 @@
                 "write",
                 "read"
             ]
+        },
+        "get": {
+            "access": [
+                "admin",
+                "write",
+                "read"
+            ]
+        },
+        "updateName": {
+            "access": [
+                "admin"
+            ]
+        },
+        "delete": {
+            "access": [
+                "admin"
+            ]
         }
     }
 }
